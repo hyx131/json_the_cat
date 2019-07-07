@@ -6,18 +6,29 @@ const breedFetcher = function(breedName, callback) {
 
   request(URL, (error, response, body) => {
     if (error) {
-      return callback(error);
+      return callback(error, null);
     }
 
     const data = JSON.parse(body);
-    const breedInfo = data[0].description; //need to pass as data[0] becuase no query parameter returns empty array [];
+    // console.log("dddddd", data[0]);
+    // const breedInfo = data[0].description; //need to pass as data[0] becuase no query parameter returns empty array [];
 
-    if (breedInfo) { 
-      return callback(null, breedInfo);
+    if (data[0]) { 
+      return callback(null, data[0].description);
     } else {
-      return callback(error);
+      return callback(error, null);
     }
   });
 };
+
+// breedFetcher("Raj", (error, data) => {
+//   if (error) {
+//     console.log("Request failed: ", error);
+//   } else if (data === null) {
+//     console.log("Breed not found.");
+//   } else {
+//     console.log(data);
+//   }
+// });
 
 module.exports = { breedFetcher };
